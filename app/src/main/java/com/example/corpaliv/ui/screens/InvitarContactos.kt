@@ -21,7 +21,6 @@ fun InvitarContactos() {
     val context = LocalContext.current
     var error by remember { mutableStateOf("") }
 
-    // Selecciona un número de la agenda, sin permiso para leer todos los contactos.
     val seleccionarNumero = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { resultado ->

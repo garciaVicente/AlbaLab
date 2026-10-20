@@ -1,7 +1,7 @@
 package com.example.corpaliv.ui
 
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,29 +11,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Alignment
 import com.example.corpaliv.model.*
 import com.example.corpaliv.ui.screens.FormularioScreen
 import com.example.corpaliv.ui.screens.ActividadScreen
 import com.example.corpaliv.ui.screens.RegistrosScreen
 import com.example.corpaliv.ui.screens.InvitarContactos
-import com.example.corpaliv.ui.screens.PreferenciasScreen
 import com.example.corpaliv.viewmodel.SolicitudViewModel
-import com.example.corpaliv.viewmodel.EstadoViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
-
+import androidx.compose.animation.Crossfade
 private val secciones = listOf("Inicio", "Programas", "Productos", "Impacto", "Colaborar", "Actividad", "Registros")
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
     val vm: SolicitudViewModel = viewModel()
-    val estadoVm: EstadoViewModel = viewModel()
     var actual by remember { mutableStateOf("Inicio") }
     var tipo by remember { mutableStateOf("Donaciones") }
     val estadoDrawer = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
     ModalNavigationDrawer(drawerState = estadoDrawer, drawerContent = {
         ModalDrawerSheet {
             Text("CORPALIV · Alba Lab", style = MaterialTheme.typography.titleLarge,
@@ -58,17 +55,26 @@ fun App() {
                 }
             }
         }) { padding ->
-            Box(Modifier.fillMaxSize().padding(padding)) {
-                when (actual) {
+            Crossfade(
+                targetState = actual,
+                label = "pantallas",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) { pantalla ->
+                when (pantalla) {
                     "Inicio" -> Inicio(onIr = { actual = it })
                     "Programas" -> Listado("Nuestros programas", DatosContenido.programas)
                     "Productos" -> Listado("Productos y servicios", DatosContenido.productos)
                     "Impacto" -> Impacto()
                     "Colaborar" -> Colaborar(onSeleccion = { tipo = it; actual = "Contacto" })
-                    "Contacto" -> FormularioScreen(tipoInicial = tipo, vm = vm, onVolver = { actual = "Colaborar" })
+                    "Contacto" -> FormularioScreen(
+                        tipoInicial = tipo,
+                        vm = vm,
+                        onVolver = { actual = "Colaborar" }
+                    )
                     "Actividad" -> ActividadScreen(vm)
                     "Registros" -> RegistrosScreen(vm)
-                    "Preferencias" -> PreferenciasScreen(estadoVm)
                 }
             }
         }
@@ -120,7 +126,7 @@ private fun Impacto() {
         Bloque("Contenido multimedia", "La aplicación puede abrir material audiovisual mediante un enlace.",
             "Encuentra material audiovisual sobre inclusión y accesibilidad.")
         OutlinedButton(onClick = {
-            val enlace = Uri.parse("https://www.youtube.com/results?search_query=inclusi%C3%B3n+laboral+accesibilidad")
+            val enlace = "https://www.youtube.com/results?search_query=inclusi%C3%B3n+laboral+accesibilidad".toUri()
             contexto.startActivity(Intent(Intent.ACTION_VIEW, enlace))
         }, modifier = Modifier.fillMaxWidth()) { Text("Explorar videos de inclusión") }
     }

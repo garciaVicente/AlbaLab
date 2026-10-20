@@ -43,14 +43,23 @@ fun FormularioScreen(tipoInicial: String, vm: SolicitudViewModel, onVolver: () -
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Solicitud de colaboración", style = MaterialTheme.typography.headlineSmall)
-        OutlinedTextField(solicitud.nombre, { solicitud = solicitud.copy(nombre = it) },
+        OutlinedTextField(solicitud.nombre,
+            { solicitud = solicitud.copy(nombre = it) },
             label = { Text("Nombre *") }, isError = errores.nombre != null,
+            trailingIcon = {
+                if (errores.nombre != null) {Text("⚠\uFE0F️") }},
             supportingText = { errores.nombre?.let { Text(it) } }, singleLine = true,
             modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(solicitud.correo, { solicitud = solicitud.copy(correo = it) },
+
+        OutlinedTextField(solicitud.correo,
+            { solicitud = solicitud.copy(correo = it) },
             label = { Text("Correo *") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            isError = errores.correo != null, supportingText = { errores.correo?.let { Text(it) } },
+            isError = errores.correo != null,
+            trailingIcon = {if (errores.correo != null) {Text("⚠\uFE0F️")}},
+            supportingText = { errores.correo?.let { Text(it) } },
             modifier = Modifier.fillMaxWidth())
+
+
         OutlinedTextField(solicitud.organizacion, { solicitud = solicitud.copy(organizacion = it) },
             label = { Text("Organización (opcional)") }, modifier = Modifier.fillMaxWidth())
         Box {
@@ -62,8 +71,12 @@ fun FormularioScreen(tipoInicial: String, vm: SolicitudViewModel, onVolver: () -
             }
         }
         OutlinedTextField(solicitud.mensaje, { solicitud = solicitud.copy(mensaje = it) },
-            label = { Text("Mensaje *") }, minLines = 3, modifier = Modifier.fillMaxWidth(),
-            isError = errores.mensaje != null, supportingText = { errores.mensaje?.let { Text(it) } })
+            label = { Text("Mensaje *") },
+            minLines = 3, modifier = Modifier.fillMaxWidth(),
+            isError = errores.mensaje != null,
+            trailingIcon = {if (errores.mensaje != null) {Text("⚠️")}},
+
+            supportingText = { errores.mensaje?.let { Text(it) } })
         OutlinedButton(onClick = { archivo.launch(arrayOf("image/*", "application/pdf")) }, modifier = Modifier.fillMaxWidth()) {
             Text("Seleccionar imagen o PDF")
         }
