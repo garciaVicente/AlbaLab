@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme(colorScheme = lightColorScheme(
-                primary = Color(0xFF17594A), secondary = Color(0xFF306B80),
+                primary = Color(0xFF162781), secondary = Color(0xFF306B80),
                 background = Color(0xFFFAFBF8), surface = Color.White
             )) { App() }
         }

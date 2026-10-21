@@ -26,8 +26,12 @@ fun ActividadScreen(vm: SolicitudViewModel) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Registrar actividad", style = MaterialTheme.typography.headlineSmall)
-        OutlinedTextField(actividad.titulo, { actividad = actividad.copy(titulo = it) },
-            label = { Text("Nombre de la actividad *") }, modifier = Modifier.fillMaxWidth(),
+        OutlinedTextField(actividad.titulo,
+            { actividad = actividad.copy(titulo = it) },
+            label = { Text("Nombre de la actividad *") },
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                if (errores.titulo != null) {Text("⚠\uFE0F️") }},
             isError = errores.titulo != null, supportingText = { errores.titulo?.let { Text(it) } })
         OutlinedButton(onClick = {
             DatePickerDialog(context, { _, year, month, day ->
@@ -35,13 +39,21 @@ fun ActividadScreen(vm: SolicitudViewModel) {
             }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show()
         }, modifier = Modifier.fillMaxWidth()) { Text(if (actividad.fecha.isEmpty()) "Seleccionar fecha *" else "Fecha: ${actividad.fecha}") }
         errores.fecha?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+
         OutlinedTextField(actividad.participantes, { actividad = actividad.copy(participantes = it) },
-            label = { Text("Cantidad de participantes *") }, modifier = Modifier.fillMaxWidth(),
+            label = { Text("Cantidad de participantes *") },
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                if (errores.participantes != null) {Text("⚠\uFE0F️") }},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             isError = errores.participantes != null,
             supportingText = { errores.participantes?.let { Text(it) } })
+
         OutlinedTextField(actividad.descripcion, { actividad = actividad.copy(descripcion = it) },
-            label = { Text("Descripción *") }, modifier = Modifier.fillMaxWidth(),
+            label = { Text("Descripción *") },
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                if (errores.descripcion != null) {Text("⚠\uFE0F️") }},
             isError = errores.descripcion != null,
             supportingText = { errores.descripcion?.let { Text(it) } })
         Row { Checkbox(actividad.realizada, { actividad = actividad.copy(realizada = it) })

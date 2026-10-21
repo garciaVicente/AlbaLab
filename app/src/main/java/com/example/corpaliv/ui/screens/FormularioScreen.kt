@@ -75,7 +75,6 @@ fun FormularioScreen(tipoInicial: String, vm: SolicitudViewModel, onVolver: () -
             minLines = 3, modifier = Modifier.fillMaxWidth(),
             isError = errores.mensaje != null,
             trailingIcon = {if (errores.mensaje != null) {Text("⚠️")}},
-
             supportingText = { errores.mensaje?.let { Text(it) } })
         OutlinedButton(onClick = { archivo.launch(arrayOf("image/*", "application/pdf")) }, modifier = Modifier.fillMaxWidth()) {
             Text("Seleccionar imagen o PDF")
