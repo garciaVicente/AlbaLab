@@ -17,12 +17,33 @@ fun RegistrosScreen(vm: SolicitudViewModel) {
     val solicitudes by vm.solicitudes.collectAsState()
     val actividades by vm.actividades.collectAsState()
     val context = LocalContext.current
+    var busqueda by remember { mutableStateOf("") }
+
+    val solicitudesFiltradas = solicitudes.filter {
+        it.nombre.contains(busqueda, ignoreCase = true)
+    }
+
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Registros locales", style = MaterialTheme.typography.headlineSmall)
         Text("Solo se muestran en este celular, no se envían a CORPALIV.")
-        Text("Solicitudes (${solicitudes.size})", style = MaterialTheme.typography.titleLarge)
-        solicitudes.forEach { s ->
+        Text("Solicitudes (${solicitudesFiltradas.size})",
+            style = MaterialTheme.typography.titleLarge
+        )
+        OutlinedTextField(
+            value = busqueda,
+            onValueChange = { busqueda = it },
+            label = { Text("Buscar por nombre") },
+            placeholder = { Text("Ingrese un nombre") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        if (solicitudesFiltradas.isEmpty()) {
+            Text("No se encontraron solicitudes")
+        }
+
+        solicitudesFiltradas.forEach { s ->
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
                     Text(s.nombre, style = MaterialTheme.typography.titleMedium)
