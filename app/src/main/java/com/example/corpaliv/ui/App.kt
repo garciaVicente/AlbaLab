@@ -50,7 +50,7 @@ fun App() {
             NavigationBar {
                 listOf("Inicio", "Programas", "Colaborar").forEach { item ->
                     NavigationBarItem(selected = actual == item, onClick = { actual = item },
-                        icon = { Text(when (item) { "Inicio" -> "⌂"; "Programas" -> "▤"; else -> "♡" }) },
+                        icon = { Text(when (item) { "Inicio" -> "\uD83C\uDFE0"; "Programas" -> "\uD83D\uDCCB"; else -> "❤\uFE0F" }) },
                         label = { Text(item) })
                 }
             }
@@ -94,7 +94,7 @@ private fun Bloque(titulo: String, texto: String, extra: String = "", onClick: (
             Text(titulo, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             Text(texto)
             if (extra.isNotEmpty()) Text(extra, style = MaterialTheme.typography.bodySmall)
-            onClick?.let { TextButton(onClick = it) { Text("Solicitar información →") } }
+            onClick?.let { TextButton(onClick = it) { Text("Solicitar información ") } }
         }
     }
 }

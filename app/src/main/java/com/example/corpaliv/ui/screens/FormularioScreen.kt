@@ -81,7 +81,7 @@ fun FormularioScreen(tipoInicial: String, vm: SolicitudViewModel, onVolver: () -
         }
         if (solicitud.archivoNombre.isNotEmpty()) {
             Text("Seleccionado: ${solicitud.archivoNombre}")
-            TextButton(onClick = { solicitud = solicitud.copy(archivoUri = "", archivoNombre = "") }) { Text("Quitar adjunto") }
+            TextButton(onClick = { solicitud = solicitud.copy(archivoUri = "", archivoNombre = "") }) { Text("Eliminar archivo adjunto") }
         }
         Row { Checkbox(solicitud.consentimiento, { solicitud = solicitud.copy(consentimiento = it) })
             Text("Autorizo el almacenamiento de esta solicitud en el dispositivo.", Modifier.padding(top = 8.dp)) }

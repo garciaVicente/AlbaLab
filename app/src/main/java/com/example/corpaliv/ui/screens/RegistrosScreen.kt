@@ -18,7 +18,6 @@ fun RegistrosScreen(vm: SolicitudViewModel) {
     val actividades by vm.actividades.collectAsState()
     val context = LocalContext.current
     var busqueda by remember { mutableStateOf("") }
-
     val solicitudesFiltradas = solicitudes.filter {
         it.nombre.contains(busqueda, ignoreCase = true)
     }
