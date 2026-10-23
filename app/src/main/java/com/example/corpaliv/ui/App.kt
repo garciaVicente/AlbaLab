@@ -122,8 +122,8 @@ private fun Impacto() {
     Contenedor {
         Text("Historias e impacto social", style = MaterialTheme.typography.headlineSmall)
         DatosContenido.historias.forEach { Bloque(it.titulo, it.descripcion, it.detalle) }
-        Bloque("Contenido multimedia", "La aplicación puede abrir material audiovisual mediante un enlace.",
-            "Encuentra material audiovisual sobre inclusión y accesibilidad.")
+        Bloque("Contenido multimedia", "Encuentra material audiovisual sobre inclusión y accesibilidad.",
+            "Inclusión y accesibilidad en Youtube.")
         OutlinedButton(onClick = {
             val enlace = "https://www.youtube.com/results?search_query=inclusi%C3%B3n+laboral+accesibilidad".toUri()
             contexto.startActivity(Intent(Intent.ACTION_VIEW, enlace))
