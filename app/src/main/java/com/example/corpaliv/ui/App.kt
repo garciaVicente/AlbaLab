@@ -122,7 +122,6 @@ private fun Impacto() {
     Contenedor {
         Text("Historias e impacto social", style = MaterialTheme.typography.headlineSmall)
         DatosContenido.historias.forEach { Bloque(it.titulo, it.descripcion, it.detalle) }
-        Bloque("Indicadores", "Los indicadores de resultados deberán incorporarse solo con cifras autorizadas y verificadas. No se publican cifras inventadas.")
         Bloque("Contenido multimedia", "La aplicación puede abrir material audiovisual mediante un enlace.",
             "Encuentra material audiovisual sobre inclusión y accesibilidad.")
         OutlinedButton(onClick = {
